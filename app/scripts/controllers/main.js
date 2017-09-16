@@ -20,7 +20,7 @@ angular.module('messageBoardApp')
                   var msg = response.data.text;
                   $scope.messages.push(msg);
               }, function error(response) {
-
+                  console.log('Error creating message: ', $scope.text);
               });
           }
       };
