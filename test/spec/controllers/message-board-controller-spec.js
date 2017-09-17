@@ -7,7 +7,7 @@ describe('Controller: MessageBoardCtrl', function () {
 
    var scope, httpBackend, http, controller;
 
-   var message = {"id": "1", "text": "hello!", "createDate": [2017,9,17,11,46,27,720000000]};
+   var message = {"id": "1", "text": "hello!", "createDate": "17/09/2017 10:56"};
 
  // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend, $http) {

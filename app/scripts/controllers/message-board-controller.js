@@ -12,6 +12,8 @@ angular.module('messageBoardApp')
 
       $scope.text = '';
       $scope.messages = [];
+      $scope.users = [];
+      $scope.selectedUser = {};
 
       $scope.addMessage = function(){
           if ($scope.text){
@@ -23,7 +25,7 @@ angular.module('messageBoardApp')
                   $scope.getMessages();
 
               }, function error(response) {
-                  console.log('Error creating message: ', $scope.text);
+                  console.log('Error creating message: ', response);
               });
           }
       };
@@ -35,13 +37,31 @@ angular.module('messageBoardApp')
                $scope.messages = response.data;
 
             }, function error(response) {
-                console.log('Error retrieving all messages.');
+                console.log('Error retrieving all messages.', response);
+            });
+      };
+
+      $scope.getUsers = function(){
+            $http.get('http://localhost:8080/users')
+            .then(function success(response) {
+
+               $scope.users = response.data;
+
+            }, function error(response) {
+                console.log('Error retrieving all users.', response);
             });
       };
 
       $scope.clearForm = function() {
            $scope.text = '';
+           $scope.selectedUser = {};
       };
 
-      $scope.getMessages();
+      $scope.init = function() {
+           $scope.getMessages();
+           $scope.getUsers();
+      };
+
+      $scope.init();
+
   });

@@ -2,13 +2,19 @@
   <h1>Message Board</h1>
   <div class="row">
     <div class="col-lg-4">
-      <input type="text" class="form-control" placeholder="Message" ng-model="text">
+      <input type="text" class="form-control" placeholder="Message Text" ng-model="text">
     </div>
 
+    <div class="col-md-3">
+      <select class="form-control" ng-model="selectedUser">
+        <option value="" disabled selected>Select User</option>
+        <option ng-repeat="user in users" value="{{user.id}}">{{user.name}}</option>
+      </select>
+    </div>
 
     <div class="col-md-2">
       <button id="done" type="submit" class="btn btn-success" ng-click="addMessage()">
-        <span class="glyphicon" aria-hidden="true"></span>Send
+        <span class="glyphicon" aria-hidden="true"></span>Post
       </button>
     </div>
   </div>
@@ -22,8 +28,13 @@
 
       <table class="table table-hover">
 
+        <tr>
+          <th>Text</th>
+          <th>Date</th>
+        </tr>
         <tr ng-repeat = "message in messages track by message.id">
           <td>{{ message.text }}</td>
+          <td>{{ message.createDate | date: 'yyyy-MM-dd HH:mm:ss Z'}}</td>
         </tr>
       </table>
     </div>
