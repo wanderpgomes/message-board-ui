@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: MessageBoardCtrl', function () {
 
   // load the controller's module
   beforeEach(module('messageBoardApp'));
@@ -15,7 +15,7 @@ describe('Controller: MainCtrl', function () {
     http = $http;
     controller = $controller;
 
-    controller('MainCtrl', {
+    controller('MessageBoardCtrl', {
       $scope: scope,
       $http: http
     });

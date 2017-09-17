@@ -8,7 +8,7 @@
  * Controller of the messageBoardApp
  */
 angular.module('messageBoardApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MessageBoardCtrl', function ($scope, $http) {
 
       $scope.text = '';
       $scope.messages = [];
