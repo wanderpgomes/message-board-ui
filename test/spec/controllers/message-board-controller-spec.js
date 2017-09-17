@@ -7,6 +7,7 @@ describe('Controller: MessageBoardCtrl', function () {
 
    var scope, httpBackend, http, controller;
 
+   var message = {"id": "1", "text": "hello!", "createDate": [2017,9,17,11,46,27,720000000]};
 
  // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend, $http) {
@@ -15,6 +16,11 @@ describe('Controller: MessageBoardCtrl', function () {
     http = $http;
     controller = $controller;
 
+    scope.messages = [];
+
+    httpBackend.whenGET("http://localhost:8080/messages")
+    .respond([message]);
+
     controller('MessageBoardCtrl', {
       $scope: scope,
       $http: http
@@ -22,17 +28,25 @@ describe('Controller: MessageBoardCtrl', function () {
   }));
 
   it('should add a new message', function() {
-      var message = {text: 'message'};
       httpBackend.whenPOST("http://localhost:8080/messages", message).respond(200, message);
 
       scope.text = message.text;
 
-      scope.send();
+      scope.addMessage();
 
       httpBackend.flush();
 
       expect(scope.messages.length).toBe(1);
-      expect(scope.messages[0].text).toBe('message');
+      expect(scope.messages[0].text).toBe('hello!');
     });
+
+    it('should load a list of messages', function () {
+
+        httpBackend.expectGET("http://localhost:8080/messages");
+
+        httpBackend.flush();
+
+        expect(scope.messages.length).toBe(1);
+      });
 
 });
