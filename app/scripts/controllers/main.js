@@ -17,7 +17,7 @@ angular.module('messageBoardApp')
           if ($scope.text){
               $http.post('http://localhost:8080/messages', {text: $scope.text})
               .then(function success(response) {
-                  var msg = response.data.text;
+                  var msg = response.data;
                   $scope.messages.push(msg);
               }, function error(response) {
                   console.log('Error creating message: ', $scope.text);

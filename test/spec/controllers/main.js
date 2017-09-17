@@ -32,7 +32,7 @@ describe('Controller: MainCtrl', function () {
       httpBackend.flush();
 
       expect(scope.messages.length).toBe(1);
-      expect(scope.messages[0]).toBe('message');
+      expect(scope.messages[0].text).toBe('message');
     });
 
 });

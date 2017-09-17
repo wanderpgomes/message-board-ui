@@ -22,8 +22,8 @@
 
       <table class="table table-hover">
 
-        <tr ng-repeat = "msg in messages">
-          <td>{{ msg }}</td>
+        <tr ng-repeat = "message in messages track by message.id">
+          <td>{{ message.text }}</td>
         </tr>
       </table>
     </div>
