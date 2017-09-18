@@ -13,7 +13,7 @@ angular.module('messageBoardApp')
       $scope.text = '';
       $scope.messages = [];
       $scope.users = [];
-      $scope.selectedUser = {};
+      $scope.selectedUser = '';
 
       $scope.addMessage = function(){
           if ($scope.text){
@@ -54,7 +54,7 @@ angular.module('messageBoardApp')
 
       $scope.clearForm = function() {
            $scope.text = '';
-           $scope.selectedUser = {};
+           $scope.selectedUser = '';
       };
 
       $scope.init = function() {
