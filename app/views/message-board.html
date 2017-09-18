@@ -34,7 +34,7 @@
         </tr>
         <tr ng-repeat = "message in messages track by message.id">
           <td>{{ message.text }}</td>
-          <td>{{ message.createDate | date: 'yyyy-MM-dd HH:mm:ss Z'}}</td>
+          <td>{{ message.createDate }}</td>
         </tr>
       </table>
     </div>

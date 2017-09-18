@@ -17,7 +17,7 @@ angular.module('messageBoardApp')
 
       $scope.addMessage = function(){
           if ($scope.text){
-              $http.post('http://localhost:8080/messages', {text: $scope.text})
+              $http.post('http://localhost:8080/messages', {text: $scope.text, userId: $scope.selectedUser })
               .then(function success(response) {
 
                   $scope.messages.push(response.data);
