@@ -31,9 +31,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getMessages = function(){
-            $http.get('http://localhost:8080/messages')
-            .then(function success(response) {
-
+            $http.get('http://localhost:8080/messages').then(function success(response) {
                $scope.messages = response.data;
 
             }, function error(response) {
@@ -41,10 +39,18 @@ angular.module('messageBoardApp')
             });
       };
 
-      $scope.getUsers = function(){
-            $http.get('http://localhost:8080/users')
+      $scope.filterMessagesByUser = function(){
+            $http.get('http://localhost:8080/messages', { params: { userId: $scope.selectedUser } })
             .then(function success(response) {
+               $scope.messages = response.data;
 
+            }, function error(response) {
+                console.log('Error retrieving messages by user id: ' + $scope.selectedUser, response);
+            });
+      };
+
+      $scope.getUsers = function(){
+            $http.get('http://localhost:8080/users').then(function success(response) {
                $scope.users = response.data;
 
             }, function error(response) {
