@@ -13,7 +13,13 @@ body {
   margin-top:20px;
 }
 
+.selected {
+  background-color: #ddd;
+}
 
+.top-buffer {
+   margin-top:20px;
+}
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,

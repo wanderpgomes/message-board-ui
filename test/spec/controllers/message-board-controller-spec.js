@@ -7,7 +7,10 @@ describe('Controller: MessageBoardCtrl', function () {
 
    var scope, httpBackend, http, controller;
 
-   var message = {id: 1, text: "hello!", createDate: 1505786731000, userId: 1};
+   var message1 = {text: "hello!", userId: 1};
+   var response1 = {id: 1, text: "hello!", createDate: 1505786631000, userId: 1};
+   var message2 = {text: "hello back!", userId: 1, originalMessageId: 1};
+   var response2 = {id: 2, text: "hello back!", createDate: 1505786931000, userId: 1, originalMessageId: 1};
 
  // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend, $http) {
@@ -18,7 +21,7 @@ describe('Controller: MessageBoardCtrl', function () {
 
     scope.messages = [];
 
-    httpBackend.whenGET("http://localhost:8080/messages").respond([message]);
+    httpBackend.whenGET("http://localhost:8080/messages").respond([response1]);
 
     controller('MessageBoardCtrl', {
       $scope: scope,
@@ -27,9 +30,9 @@ describe('Controller: MessageBoardCtrl', function () {
   }));
 
   it('should add a new message', function() {
-      httpBackend.whenPOST("http://localhost:8080/messages", message).respond(200, message);
+      httpBackend.whenPOST("http://localhost:8080/messages", message1).respond(200, response1);
 
-      scope.text = message.text;
+      scope.text = response1.text;
 
       scope.addMessage();
 
@@ -39,10 +42,23 @@ describe('Controller: MessageBoardCtrl', function () {
       expect(scope.messages[0].text).toBe('hello!');
   });
 
-  it('should filter messages by user id', function() {
-        httpBackend.whenGET("http://localhost:8080/messages", { params: { userId: 1 }}).respond(200, message);
+  it('should respond to a message', function() {
+        httpBackend.whenPOST("http://localhost:8080/messages", message2).respond(200, response2);
 
-        scope.text = message.text;
+        scope.text = response2.text;
+
+        scope.respondMessage();
+
+        httpBackend.flush();
+
+        expect(scope.messages.length).toBe(1);
+    });
+
+
+  it('should filter messages by user id', function() {
+        httpBackend.whenGET("http://localhost:8080/messages", { params: { userId: 1 }}).respond(200, message1);
+
+        scope.text = message1.text;
 
         scope.filterMessagesByUser();
 

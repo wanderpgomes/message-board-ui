@@ -1,6 +1,7 @@
 <div class="container">
   <h1>Message Board</h1>
-  <div class="row">
+
+  <div class="row top-buffer">
     <div class="col-lg-4">
       <input type="text" class="form-control" placeholder="Message Text" ng-model="text">
     </div>
@@ -12,17 +13,32 @@
       </select>
     </div>
 
-    <div class="col-md-2">
-      <button id="filter" type="submit" class="btn btn-info" ng-click="filterMessagesByUser()">
-        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter
-      </button>
-    </div>
+  </div>
 
-    <div class="col-md-2">
-      <button id="post" type="submit" class="btn btn-success" ng-click="addMessage()">
-        <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Post
-      </button>
-    </div>
+    <div class="row top-buffer">
+      <div class="col-md-2">
+        <button id="filter" type="submit" class="btn btn-info" ng-click="filterMessagesByUser()">
+          <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter
+        </button>
+      </div>
+
+      <div class="col-md-2">
+        <button id="post" type="submit" class="btn btn-success" ng-click="addMessage()">
+          <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Post
+        </button>
+      </div>
+
+      <div class="col-md-2">
+        <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
+          <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
+        </button>
+      </div>
+
+      <div class="col-md-2">
+        <button id="refresh" type="submit" class="btn btn-success" ng-click="addMessage()">
+          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        </button>
+      </div>
   </div>
 
   <div class="row top-buffer">
@@ -38,7 +54,7 @@
           <th>Content</th>
           <th>Date</th>
         </tr>
-        <tr ng-repeat = "message in messages track by message.id">
+        <tr ng-repeat = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
           <td>{{ message.text }}</td>
           <td>{{ message.createDate | date: 'dd/mm/yyyy hh:mm:ss'}}</td>
         </tr>
