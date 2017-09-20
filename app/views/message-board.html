@@ -29,7 +29,7 @@
       </div>
 
       <div class="col-md-2">
-        <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
+        <button id="respond" type="submit" class="btn btn-primary" ng-click="Message()">
           <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
         </button>
       </div>
@@ -54,9 +54,14 @@
           <th>Content</th>
           <th>Date</th>
         </tr>
-        <tr ng-repeat = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
+        <tr ng-repeat-start = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
           <td>{{ message.text }}</td>
           <td>{{ message.createDate | date: 'dd/mm/yyyy hh:mm:ss'}}</td>
+        </tr>
+        <tr ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
+          <td colspan="3">
+            <h3>Test</h3>
+          </td>
         </tr>
       </table>
     </div>

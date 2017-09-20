@@ -16,6 +16,8 @@ angular.module('messageBoardApp')
       $scope.selectedUser = '';
       $scope.selectedMessage = '';
 
+      $scope.isCollapsed = true;
+
       $scope.addMessage = function(){
           if ($scope.text){
               $http.post('http://localhost:8080/messages', {text: $scope.text, userId: $scope.selectedUser })
@@ -37,6 +39,7 @@ angular.module('messageBoardApp')
               { text: $scope.text, userId: $scope.selectedUser, originalMessageId: $scope.selectedMessage })
               .then(function success(response) {
 
+                  console.log(response.data);
                   $scope.clearForm();
 
               }, function error(response) {
@@ -75,6 +78,7 @@ angular.module('messageBoardApp')
 
       $scope.selectMessage = function(message){
            $scope.selectedMessage = message.id;
+           $scope.isCollapsed = !$scope.isCollapsed;
       };
 
       $scope.clearForm = function() {
