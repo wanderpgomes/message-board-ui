@@ -15,25 +15,43 @@
 
   </div>
 
-    <div class="row top-buffer">
-      <div class="col-md-2">
-        <button id="filter" type="submit" class="btn btn-info" ng-click="filterMessagesByUser()">
-          <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter
-        </button>
-      </div>
+  <div class="row top-buffer">
+    <div class="col-md-2">
+      <button id="filter" type="submit" class="btn btn-info" ng-click="filterMessagesByUser()">
+        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter
+      </button>
+    </div>
 
-      <div class="col-md-2">
-        <button id="post" type="submit" class="btn btn-success" ng-click="addMessage()">
-          <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send
-        </button>
-      </div>
+    <div class="col-md-2">
+      <button id="post" type="submit" class="btn btn-success" ng-click="addMessage()">
+        <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send
+      </button>
+    </div>
 
-      <div class="col-md-2">
-        <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
-          <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
-        </button>
-      </div>
+    <div class="col-md-2">
+      <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
+      </button>
+    </div>
+  </div>
 
+  <div class="row top-buffer">
+    <div class="col-lg-4">
+       <input type="text" class="form-control" placeholder="City" ng-model="city">
+    </div>
+
+    <div class="col-md-3">
+      <button id="city" type="submit" class="btn btn-success" ng-click="getCityInfo()">
+        <span class="glyphicon" aria-hidden="true"></span> Get Temperature
+      </button>
+    </div>
+  </div>
+
+  <div class="row top-buffer">
+    <div class="col-md-2">City: {{cityInfo.name}}</div>
+    <div class="col-md-2">Temperature: {{cityInfo.main.temp}}</div>
+    <div class="col-md-2">Latitude:  {{cityInfo.coord.lat}}</div>
+    <div class="col-md-2">Longitude:  {{cityInfo.coord.lon}}</div>
   </div>
 
   <div class="row top-buffer">
@@ -51,12 +69,11 @@
         </tr>
         <tr ng-repeat-start = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
           <td>{{ message.text }}</td>
-          <td>{{ message.createDate | date: 'dd/mm/yyyy hh:mm:ss'}}</td>
+          <td>{{ message.createDate | date: 'd/M/y h:mm:ss a'}}</td>
         </tr>
-        <tr ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
-          <td colspan="3">
-            <div>{{messageResponses}}</div>
-          </td>
+        <tr ng-repeat="response in messageResponses track by response.id" ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
+          <td>{{ response.text }}</td>
+          <td>{{ response.createDate | date: 'd/M/y h:mm:ss a'}}</td>
         </tr>
       </table>
     </div>

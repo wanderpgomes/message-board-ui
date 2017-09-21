@@ -11,6 +11,7 @@ describe('Controller: MessageBoardCtrl', function () {
    var response1 = {id: 1, text: "hello!", createDate: 1505786631000, userId: 1};
    var message2 = {text: "hello back!", userId: 1, originalMessageId: 1};
    var response2 = {id: 2, text: "hello back!", createDate: 1505786931000, userId: 1, originalMessageId: 1};
+   var users = {name:"user1"};
 
  // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend, $http) {
@@ -22,6 +23,7 @@ describe('Controller: MessageBoardCtrl', function () {
     scope.messages = [];
 
     httpBackend.whenGET("http://localhost:8080/messages").respond([response1]);
+    httpBackend.whenGET("http://localhost:8080/users").respond([users]);
 
     controller('MessageBoardCtrl', {
       $scope: scope,
@@ -68,6 +70,23 @@ describe('Controller: MessageBoardCtrl', function () {
         expect(scope.messages[0].text).toBe('hello!');
    });
 
+   it('should get city temperature and location', function() {
+       var cityInfo = { "coord": { "lon": -79.42, "lat": 43.7 },
+                        "main": { "temp": 20.72 },
+                        "name": "Toronto"};
+
+       httpBackend.whenGET("http://api.openweathermap.org/data/2.5/weather",
+         { params: { q: scope.city, units: 'metric', appid: '1268ca2589e6cf4656173d406c87a086' } }).respond(200, cityInfo);
+
+       scope.cityInfo = cityInfo;
+
+       scope.getCityInfo();
+
+       httpBackend.flush();
+
+       expect(scope.cityInfo).toBeTruthy();
+  });
+
 
   it('should load a list of messages', function () {
 
@@ -76,6 +95,15 @@ describe('Controller: MessageBoardCtrl', function () {
       httpBackend.flush();
 
       expect(scope.messages.length).toBe(1);
+   });
+
+   it('should load a list of all users', function () {
+
+      httpBackend.expectGET("http://localhost:8080/users");
+
+      httpBackend.flush();
+
+      expect(scope.users.length).toBe(1);
    });
 
 });
