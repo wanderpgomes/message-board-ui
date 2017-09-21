@@ -112,6 +112,7 @@ angular.module('messageBoardApp')
            $scope.text = '';
            $scope.selectedUser = '';
            $scope.city = '';
+           $scope.cityInfo = {};
       };
 
       $scope.init = function() {
