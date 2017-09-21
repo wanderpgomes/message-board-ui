@@ -12,10 +12,10 @@ angular.module('messageBoardApp')
 
       $scope.text = '';
       $scope.messages = [];
+      $scope.messageResponses = [];
       $scope.users = [];
       $scope.selectedUser = '';
       $scope.selectedMessage = '';
-
       $scope.isCollapsed = true;
 
       $scope.addMessage = function(){
@@ -46,6 +46,16 @@ angular.module('messageBoardApp')
                   console.log('Error responding to message: ', response);
               });
           }
+      };
+
+      $scope.getResponses = function(){
+            $http.get('http://localhost:8080/responses', { params: { originalMessageId: $scope.selectedMessage } })
+            .then(function success(response) {
+               $scope.messageResponses = response.data;
+
+            }, function error(response) {
+                console.log('Error retrieving responses to a message id: ' + $scope.selectedMessage, response);
+            });
       };
 
       $scope.getMessages = function(){
@@ -79,6 +89,9 @@ angular.module('messageBoardApp')
       $scope.selectMessage = function(message){
            $scope.selectedMessage = message.id;
            $scope.isCollapsed = !$scope.isCollapsed;
+           if (!$scope.isCollapsed){
+              $scope.getResponses();
+           }
       };
 
       $scope.clearForm = function() {

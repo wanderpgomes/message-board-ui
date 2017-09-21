@@ -24,21 +24,16 @@
 
       <div class="col-md-2">
         <button id="post" type="submit" class="btn btn-success" ng-click="addMessage()">
-          <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Post
+          <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send
         </button>
       </div>
 
       <div class="col-md-2">
-        <button id="respond" type="submit" class="btn btn-primary" ng-click="Message()">
+        <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
           <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
         </button>
       </div>
 
-      <div class="col-md-2">
-        <button id="refresh" type="submit" class="btn btn-success" ng-click="addMessage()">
-          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-        </button>
-      </div>
   </div>
 
   <div class="row top-buffer">
@@ -60,7 +55,7 @@
         </tr>
         <tr ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
           <td colspan="3">
-            <h3>Test</h3>
+            <div>{{messageResponses}}</div>
           </td>
         </tr>
       </table>
