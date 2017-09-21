@@ -17,6 +17,8 @@ angular.module('messageBoardApp')
       $scope.selectedUser = '';
       $scope.selectedMessage = '';
       $scope.isCollapsed = true;
+      $scope.cityInfo = {};
+      $scope.city = '';
 
       $scope.addMessage = function(){
           if ($scope.text){
@@ -39,7 +41,6 @@ angular.module('messageBoardApp')
               { text: $scope.text, userId: $scope.selectedUser, originalMessageId: $scope.selectedMessage })
               .then(function success(response) {
 
-                  console.log(response.data);
                   $scope.clearForm();
 
               }, function error(response) {
@@ -86,6 +87,19 @@ angular.module('messageBoardApp')
             });
       };
 
+      $scope.getCityInfo = function() {
+           $http.get('http://api.openweathermap.org/data/2.5/weather',
+            { params: { q: $scope.city, units: 'metric', appid: '1268ca2589e6cf4656173d406c87a086' } })
+           .then(function success(response) {
+              $scope.cityInfo = response.data;
+
+              $scope.clearForm();
+
+           }, function error(response) {
+               console.log('Error retrieving city temperature and location: ' + $scope.city, response);
+           });
+      };
+
       $scope.selectMessage = function(message){
            $scope.selectedMessage = message.id;
            $scope.isCollapsed = !$scope.isCollapsed;
@@ -97,6 +111,7 @@ angular.module('messageBoardApp')
       $scope.clearForm = function() {
            $scope.text = '';
            $scope.selectedUser = '';
+           $scope.city = '';
       };
 
       $scope.init = function() {
