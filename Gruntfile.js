@@ -71,6 +71,11 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
+        hostname: 'localhost',
+        protocol: 'https',
+        key: grunt.file.read('my_store.key').toString(),
+        cert: grunt.file.read('my_key_store.crt').toString(),
+        passphrase: 'grunt',
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
         livereload: 35729
@@ -78,7 +83,7 @@ module.exports = function (grunt) {
       livereload: {
         options: {
          open: {
-           target: 'http://localhost:<%= connect.options.port %>',
+           target: '<%= connect.options.protocol %>://localhost:<%= connect.options.port %>',
            appName: 'Google Chrome'
          },
           middleware: function (connect) {

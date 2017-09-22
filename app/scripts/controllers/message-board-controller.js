@@ -22,7 +22,7 @@ angular.module('messageBoardApp')
 
       $scope.addMessage = function(){
           if ($scope.text){
-              $http.post('http://localhost:8080/messages',
+              $http.post('https://localhost:8443/messages',
               { text: $scope.text,
                 userId: $scope.selectedUser,
                 city: $scope.cityInfo.name,
@@ -43,10 +43,11 @@ angular.module('messageBoardApp')
 
       $scope.respondMessage = function(){
           if ($scope.text){
-              $http.post('http://localhost:8080/messages',
+              $http.post('https://localhost:8443/messages',
               { text: $scope.text, userId: $scope.selectedUser, originalMessageId: $scope.selectedMessage })
               .then(function success(response) {
 
+                  console.log(response);
                   $scope.clearForm();
 
               }, function error(response) {
@@ -56,7 +57,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getResponses = function(){
-            $http.get('http://localhost:8080/responses', { params: { originalMessageId: $scope.selectedMessage } })
+            $http.get('https://localhost:8443/responses', { params: { originalMessageId: $scope.selectedMessage } })
             .then(function success(response) {
                $scope.messageResponses = response.data;
 
@@ -66,7 +67,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getMessages = function(){
-            $http.get('http://localhost:8080/messages').then(function success(response) {
+            $http.get('https://localhost:8443/messages').then(function success(response) {
                $scope.messages = response.data;
 
             }, function error(response) {
@@ -75,7 +76,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.filterMessagesByUser = function(){
-            $http.get('http://localhost:8080/messages', { params: { userId: $scope.selectedUser } })
+            $http.get('https://localhost:8443/messages', { params: { userId: $scope.selectedUser } })
             .then(function success(response) {
                $scope.messages = response.data;
 
@@ -85,7 +86,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getUsers = function(){
-            $http.get('http://localhost:8080/users').then(function success(response) {
+            $http.get('https://localhost:8443/users/').then(function success(response) {
                $scope.users = response.data;
 
             }, function error(response) {
@@ -94,7 +95,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getCityInfo = function() {
-           $http.get('http://api.openweathermap.org/data/2.5/weather',
+           $http.get('https://api.openweathermap.org/data/2.5/weather',
             { params: { q: $scope.city, units: 'metric', appid: '1268ca2589e6cf4656173d406c87a086' } })
            .then(function success(response) {
               $scope.cityInfo = response.data;

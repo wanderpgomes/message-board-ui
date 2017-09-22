@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $httpProvider) {
+    $httpProvider.defaults.withCredentials = false;
     $routeProvider
       .when('/', {
         templateUrl: 'views/message-board.html',
