@@ -65,10 +65,14 @@
 
         <tr>
           <th>Content</th>
+          <th>Location</th>
+          <th>Temperature</th>
           <th>Date</th>
         </tr>
         <tr ng-repeat-start = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
           <td>{{ message.text }}</td>
+          <td>{{ message.city }} lat: {{message.latitude}} lon: {{message.longitude}}</td>
+          <td>{{ message.temperature }} C</td>
           <td>{{ message.createDate | date: 'd/M/y h:mm:ss a'}}</td>
         </tr>
         <tr ng-repeat="response in messageResponses track by response.id" ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">

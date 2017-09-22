@@ -17,12 +17,18 @@ angular.module('messageBoardApp')
       $scope.selectedUser = '';
       $scope.selectedMessage = '';
       $scope.isCollapsed = true;
-      $scope.cityInfo = {};
+      $scope.cityInfo = { name : '', coord : {}, main: {} };
       $scope.city = '';
 
       $scope.addMessage = function(){
           if ($scope.text){
-              $http.post('http://localhost:8080/messages', {text: $scope.text, userId: $scope.selectedUser })
+              $http.post('http://localhost:8080/messages',
+              { text: $scope.text,
+                userId: $scope.selectedUser,
+                city: $scope.cityInfo.name,
+                latitude: $scope.cityInfo.coord.lat,
+                longitude: $scope.cityInfo.coord.lon,
+                temperature: $scope.cityInfo.main.temp})
               .then(function success(response) {
 
                   $scope.messages.push(response.data);
@@ -92,8 +98,6 @@ angular.module('messageBoardApp')
             { params: { q: $scope.city, units: 'metric', appid: '1268ca2589e6cf4656173d406c87a086' } })
            .then(function success(response) {
               $scope.cityInfo = response.data;
-
-              $scope.clearForm();
 
            }, function error(response) {
                console.log('Error retrieving city temperature and location: ' + $scope.city, response);
