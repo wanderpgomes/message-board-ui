@@ -2,20 +2,20 @@
   <h1>Message Board</h1>
 
   <div class="row top-buffer">
-    <div class="col-lg-4">
+    <div class="col-md-5">
       <input type="text" class="form-control" placeholder="Message Text" ng-model="text">
     </div>
 
     <div class="col-md-3">
-      <select class="form-control" ng-model="selectedUser">
-        <option value="" disabled selected>Select User</option>
-        <option ng-repeat="user in users" value="{{user.id}}">{{user.name}}</option>
-      </select>
+      <div class="input-group">
+        <div class="input-group-addon">@</div>
+          <select class="form-control" ng-model="selectedUser">
+            <option value="" disabled selected>User</option>
+            <option ng-repeat="user in users" value="{{user.id}}">{{user.name}}</option>
+          </select>
+        </div>
     </div>
 
-  </div>
-
-  <div class="row top-buffer">
     <div class="col-md-2">
       <button id="filter" type="submit" class="btn btn-info" ng-click="filterMessagesByUser()">
         <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter
@@ -24,65 +24,84 @@
 
     <div class="col-md-2">
       <button id="post" type="submit" class="btn btn-success" ng-click="addMessage()">
-        <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send
+        <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Post
       </button>
     </div>
 
-    <div class="col-md-2">
+  </div>
+
+
+
+  <div class="row top-buffer">
+
+    <div class="col-md-5">
+      <div class="input-group">
+        <div class="input-group-addon">from:</div>
+        <input type="text" class="form-control" placeholder="City Name" ng-model="city">
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <button id="city" type="submit" class="btn btn-default" ng-click="getCityInfo()">
+        <span class="glyphicon" aria-hidden="true"></span>Get City Info
+      </button>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="row top-buffer" ng-show="cityInfo.name">
+      <div class="col-md-2"><label>City:</label> {{cityInfo.name}}</div>
+      <div class="col-md-4"><label>Temp:</label> {{cityInfo.main.temp}} C</div>
+      <div class="col-md-3"><label>Latitude:</label>  {{cityInfo.coord.lat}}</div>
+      <div class="col-md-3"><label>Longitude:</label>  {{cityInfo.coord.lon}}</div>
+  </div>
+
+  <div class="row top-buffer" ng-show="selectedMessage && !isCollapsed">
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="Response Text" ng-model="responseText">
+    </div>
+    <div class="col-md-3">
       <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
       </button>
     </div>
   </div>
 
-  <div class="row top-buffer">
-    <div class="col-lg-4">
-       <input type="text" class="form-control" placeholder="City" ng-model="city">
-    </div>
 
-    <div class="col-md-3">
-      <button id="city" type="submit" class="btn btn-success" ng-click="getCityInfo()">
-        <span class="glyphicon" aria-hidden="true"></span> Get Temperature
-      </button>
-    </div>
   </div>
 
   <div class="row top-buffer">
-    <div class="col-md-2">City: {{cityInfo.name}}</div>
-    <div class="col-md-2">Temperature: {{cityInfo.main.temp}}</div>
-    <div class="col-md-2">Latitude:  {{cityInfo.coord.lat}}</div>
-    <div class="col-md-2">Longitude:  {{cityInfo.coord.lon}}</div>
-  </div>
 
-  <div class="row top-buffer">
-    <div class="panel panel-default">
-
-      <div class="panel-heading">
-        <h3 class="panel-title">Messages</h3>
-      </div>
-
-      <table class="table table-hover">
+      <table class="table table-condensed">
 
         <tr>
-          <th>Content</th>
+          <th>Message</th>
           <th>Location</th>
-          <th>Temperature</th>
+          <th>Temp</th>
           <th>Date</th>
         </tr>
         <tr ng-repeat-start = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
-          <td>{{ message.text }}</td>
-          <td>{{ message.city }} lat: {{message.latitude}} lon: {{message.longitude}}</td>
-          <td>{{ message.temperature }} C</td>
-          <td>{{ message.createDate | date: 'd/M/y h:mm:ss a'}}</td>
+          <td class="col-md-6">{{ message.text }}</td>
+          <td class="col-md-3"><small>{{ message.city }} <em>lat: {{message.latitude}} lon: {{message.longitude}}</em></small></td>
+          <td class="col-md-1"><small>{{ message.temperature }} C</small></td>
+          <td class="col-md-2"><small>{{ message.createDate | date: 'd/M/yy H:mm:ss'}}</small></td>
         </tr>
-        <tr ng-repeat="response in messageResponses track by response.id" ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
-          <td>{{ response.text }}</td>
-          <td>{{ response.createDate | date: 'd/M/y h:mm:ss a'}}</td>
+        <tr ng-repeat="response in messageResponses track by response.id" class="selected-response" ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
+
+          <td class="col-md-6"> - {{ response.text }}</td>
+          <td class="col-md-3"/>
+          <td class="col-md-1"/>
+          <td class="col-md-2"><small>{{ response.createDate | date: 'd/M/yy H:mm:ss'}}</small></td>
+
         </tr>
+
       </table>
+
     </div>
 
-  </div>
 
 
 </div>

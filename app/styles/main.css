@@ -17,6 +17,10 @@ body {
   background-color: #ddd;
 }
 
+.selected-response {
+  background-color: #eee;
+}
+
 .top-buffer {
    margin-top:20px;
 }

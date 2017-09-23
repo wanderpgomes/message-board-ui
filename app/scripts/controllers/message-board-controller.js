@@ -11,6 +11,7 @@ angular.module('messageBoardApp')
   .controller('MessageBoardCtrl', function ($scope, $http) {
 
       $scope.text = '';
+      $scope.responseText = '';
       $scope.messages = [];
       $scope.messageResponses = [];
       $scope.users = [];
@@ -42,12 +43,14 @@ angular.module('messageBoardApp')
       };
 
       $scope.respondMessage = function(){
-          if ($scope.text){
+          if ($scope.responseText){
               $http.post('https://localhost:8443/messages',
-              { text: $scope.text, userId: $scope.selectedUser, originalMessageId: $scope.selectedMessage })
+              { text: $scope.responseText, userId: $scope.selectedUser, originalMessageId: $scope.selectedMessage })
               .then(function success(response) {
 
-                  console.log(response);
+                  $scope.getResponses();
+                   $scope.isCollapsed = false;
+
                   $scope.clearForm();
 
               }, function error(response) {
@@ -115,6 +118,7 @@ angular.module('messageBoardApp')
 
       $scope.clearForm = function() {
            $scope.text = '';
+           $scope.responseText = '';
            $scope.selectedUser = '';
            $scope.city = '';
            $scope.cityInfo = {};
