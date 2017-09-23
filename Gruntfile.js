@@ -77,7 +77,6 @@ module.exports = function (grunt) {
         cert: grunt.file.read('my_key_store.crt').toString(),
         passphrase: 'grunt',
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
         livereload: 35729
       },
       livereload: {

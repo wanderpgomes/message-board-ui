@@ -86,7 +86,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getUsers = function(){
-            $http.get('https://localhost:8443/users/').then(function success(response) {
+            $http.get('https://localhost:8443/users').then(function success(response) {
                $scope.users = response.data;
 
             }, function error(response) {
