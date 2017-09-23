@@ -10,6 +10,8 @@
 angular.module('messageBoardApp')
   .controller('MessageBoardCtrl', function ($scope, $http) {
 
+      var baseUrl = 'https://localhost:8443';
+
       $scope.text = '';
       $scope.responseText = '';
       $scope.messages = [];
@@ -18,12 +20,12 @@ angular.module('messageBoardApp')
       $scope.selectedUser = '';
       $scope.selectedMessage = '';
       $scope.isCollapsed = true;
-      $scope.cityInfo = { name : '', coord : {}, main: {} };
       $scope.city = '';
+      $scope.cityInfo = { name : '', coord : {}, main: {} };
 
       $scope.addMessage = function(){
           if ($scope.text){
-              $http.post('https://localhost:8443/messages',
+              $http.post(baseUrl + '/messages',
               { text: $scope.text,
                 userId: $scope.selectedUser,
                 city: $scope.cityInfo.name,
@@ -44,13 +46,11 @@ angular.module('messageBoardApp')
 
       $scope.respondMessage = function(){
           if ($scope.responseText){
-              $http.post('https://localhost:8443/messages',
+              $http.post(baseUrl + '/messages',
               { text: $scope.responseText, userId: $scope.selectedUser, originalMessageId: $scope.selectedMessage })
-              .then(function success(response) {
-
+              .then(function success() {
                   $scope.getResponses();
-                   $scope.isCollapsed = false;
-
+                  $scope.isCollapsed = false;
                   $scope.clearForm();
 
               }, function error(response) {
@@ -60,7 +60,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getResponses = function(){
-            $http.get('https://localhost:8443/responses', { params: { originalMessageId: $scope.selectedMessage } })
+            $http.get(baseUrl + '/responses', { params: { originalMessageId: $scope.selectedMessage } })
             .then(function success(response) {
                $scope.messageResponses = response.data;
 
@@ -70,7 +70,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getMessages = function(){
-            $http.get('https://localhost:8443/messages').then(function success(response) {
+            $http.get(baseUrl + '/messages').then(function success(response) {
                $scope.messages = response.data;
 
             }, function error(response) {
@@ -79,7 +79,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.filterMessagesByUser = function(){
-            $http.get('https://localhost:8443/messages', { params: { userId: $scope.selectedUser } })
+            $http.get(baseUrl + '/messages', { params: { userId: $scope.selectedUser } })
             .then(function success(response) {
                $scope.messages = response.data;
 
@@ -89,7 +89,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getUsers = function(){
-            $http.get('https://localhost:8443/users').then(function success(response) {
+            $http.get(baseUrl + '/users').then(function success(response) {
                $scope.users = response.data;
 
             }, function error(response) {
@@ -98,6 +98,7 @@ angular.module('messageBoardApp')
       };
 
       $scope.getCityInfo = function() {
+        if ($scope.city){
            $http.get('https://api.openweathermap.org/data/2.5/weather',
             { params: { q: $scope.city, units: 'metric', appid: '1268ca2589e6cf4656173d406c87a086' } })
            .then(function success(response) {
@@ -106,6 +107,7 @@ angular.module('messageBoardApp')
            }, function error(response) {
                console.log('Error retrieving city temperature and location: ' + $scope.city, response);
            });
+         }
       };
 
       $scope.selectMessage = function(message){
