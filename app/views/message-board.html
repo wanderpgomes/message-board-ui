@@ -27,13 +27,9 @@
         <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Post
       </button>
     </div>
-
   </div>
 
-
-
   <div class="row top-buffer">
-
     <div class="col-md-5">
       <div class="input-group">
         <div class="input-group-addon">from:</div>
@@ -46,9 +42,6 @@
         <span class="glyphicon" aria-hidden="true"></span>Get City Info
       </button>
     </div>
-
-
-
   </div>
 
 
@@ -63,19 +56,17 @@
     <div class="col-md-5">
       <input type="text" class="form-control" placeholder="Response Text" ng-model="responseText">
     </div>
-    <div class="col-md-3">
-      <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
-      </button>
+      <div class="col-md-3">
+        <button id="respond" type="submit" class="btn btn-primary" ng-click="respondMessage()">
+          <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Respond
+        </button>
+      </div>
     </div>
-  </div>
-
-
   </div>
 
   <div class="row top-buffer">
 
-      <table class="table table-condensed">
+      <table class="table table-hover">
 
         <tr>
           <th>Message</th>
@@ -85,23 +76,18 @@
         </tr>
         <tr ng-repeat-start = "message in messages track by message.id" ng-click="selectMessage(message)" ng-class="{selected: message.id === selectedMessage}">
           <td class="col-md-6">{{ message.text }}</td>
-          <td class="col-md-3"><small>{{ message.city }} <em>lat: {{message.latitude}} lon: {{message.longitude}}</em></small></td>
+          <td class="col-md-3"><small>{{ message.city }} <p><em>lat: {{message.latitude}} lon: {{message.longitude}}</em></p></small></td>
           <td class="col-md-1"><small>{{ message.temperature }} C</small></td>
-          <td class="col-md-2"><small>{{ message.createDate | date: 'd/M/yy H:mm:ss'}}</small></td>
+          <td class="col-md-2"><small>{{ message.createDate | date: 'medium' }}</small></td>
         </tr>
         <tr ng-repeat="response in messageResponses track by response.id" class="selected-response" ng-show="message.id === selectedMessage && !isCollapsed" ng-repeat-end="">
 
           <td class="col-md-6"> - {{ response.text }}</td>
           <td class="col-md-3"/>
           <td class="col-md-1"/>
-          <td class="col-md-2"><small>{{ response.createDate | date: 'd/M/yy H:mm:ss'}}</small></td>
-
+          <td class="col-md-2"><small>{{ response.createDate | date: 'medium'}}</small></td>
         </tr>
-
       </table>
-
     </div>
-
-
 
 </div>
